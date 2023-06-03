@@ -1,7 +1,9 @@
-﻿namespace ReadOwoBackend.ReadOwo.Domain.Resources;
+﻿namespace ReadOwoBackend.ReadOwo.Resources;
 
-public class SaveUserResource
+public class UserResource
 {
+    public int Id { get; set; }
+    
     public string Name { get; set; }
     
     public string email { get; set; }

@@ -1,7 +1,7 @@
 ﻿using ReadOwoBackend.ReadOwo.Domain.Models;
 using ReadOwoBackend.ReadOwo.Domain.Services.Communication;
 
-namespace ReadOwoBackend.ReadOwo.Domain.Services;
+namespace ReadOwoBackend.ReadOwo.Services;
 
 public interface IUserService
 {
