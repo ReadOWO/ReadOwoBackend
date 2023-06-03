@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ReadOwoBackend.ReadOwo.Domain.Models;
+using ReadOwoBackend.ReadOwo.Domain.Services;
 using ReadOwoBackend.ReadOwo.Resources;
-using ReadOwoBackend.ReadOwo.Services;
 
 namespace ReadOwoBackend.ReadOwo.Controllers;
 

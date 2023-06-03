@@ -1,7 +1,7 @@
 ﻿using ReadOwoBackend.ReadOwo.Domain.Repositories;
-using ReadOwoBackend.ReadOwo.Persistence.Contexts;
+using ReadOwoBackend.Shared.Persistence.Contexts;
 
-namespace ReadOwoBackend.ReadOwo.Persistence.Repositories;
+namespace ReadOwoBackend.Shared.Persistence.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {

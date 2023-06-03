@@ -2,7 +2,7 @@
 using ReadOwoBackend.Shared.Extensions;
 using ReadOwoBackend.ReadOwo.Domain.Models;
 
-namespace ReadOwoBackend.ReadOwo.Persistence.Contexts;
+namespace ReadOwoBackend.Shared.Persistence.Contexts;
 
 public class AppDbContext : DbContext
 {
