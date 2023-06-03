@@ -13,8 +13,6 @@
 
     <ItemGroup>
       <Folder Include="ReadOwo\Domain\Repositories\" />
-      <Folder Include="ReadOwo\Domain\Services\" />
-      <Folder Include="Shared\" />
     </ItemGroup>
 
 </Project>
