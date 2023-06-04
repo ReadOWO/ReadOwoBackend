@@ -5,6 +5,7 @@ using ReadOwoBackend.ReadOwo.Mapping;
 using ReadOwoBackend.ReadOwo.Persistence.Repositories;
 using ReadOwoBackend.ReadOwo.Services;
 using ReadOwoBackend.Shared.Persistence.Contexts;
+using ReadOwoBackend.Shared.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Dependency Injection Configuration
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // AutoMapper COnfiguration
 builder.Services.AddAutoMapper(
