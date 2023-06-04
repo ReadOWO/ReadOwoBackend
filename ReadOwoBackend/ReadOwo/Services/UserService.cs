@@ -44,6 +44,8 @@ public class UserService : IUserService
         if (existingUser == null)
             return new UserResponse("User not found.");
         existingUser.Name = user.Name;
+        existingUser.email = user.email;
+        existingUser.password = user.password;
         try
         {
             _userRepository.Update(existingUser);

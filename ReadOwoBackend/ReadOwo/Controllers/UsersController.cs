@@ -52,10 +52,8 @@ public class UsersController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
  
-        var user = _mapper.Map<SaveUserResource, 
-            User>(resource);
+        var user = _mapper.Map<SaveUserResource, User>(resource);
         var result = await _userService.UpdateAsync(id, user);
- 
         if (!result.Success)
             return BadRequest(result.Message);
         var userResource = _mapper.Map<User, 
