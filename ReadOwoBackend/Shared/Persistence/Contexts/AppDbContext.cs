@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReadOwoBackend.Publishing.Domain.Models;
 using ReadOwoBackend.Shared.Extensions;
 using ReadOwoBackend.ReadOwo.Domain.Models;
 
@@ -11,6 +12,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Genre> Genres { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,7 +24,12 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().Property(p => p.Name).IsRequired().HasMaxLength(30);
         modelBuilder.Entity<User>().Property(p => p.email).IsRequired().HasMaxLength(240);
         modelBuilder.Entity<User>().Property(p => p.password).IsRequired().HasMaxLength(240);
+
         
+        modelBuilder.Entity<Genre>().ToTable("Genres");
+        modelBuilder.Entity<Genre>().HasKey(p=>p.Id);
+        modelBuilder.Entity<Genre>().Property(p=>p.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Genre>().Property(p=>p.Name).IsRequired().HasMaxLength(24);
         
         modelBuilder.UseSnakeCaseNamingConvention();
     }
