@@ -25,11 +25,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().Property(p => p.email).IsRequired().HasMaxLength(240);
         modelBuilder.Entity<User>().Property(p => p.password).IsRequired().HasMaxLength(240);
 
-        
-        modelBuilder.Entity<Genre>().ToTable("Genres");
-        modelBuilder.Entity<Genre>().HasKey(p=>p.Id);
-        modelBuilder.Entity<Genre>().Property(p=>p.Id).IsRequired().ValueGeneratedOnAdd();
-        modelBuilder.Entity<Genre>().Property(p=>p.Name).IsRequired().HasMaxLength(24);
+
         
         modelBuilder.UseSnakeCaseNamingConvention();
     }
