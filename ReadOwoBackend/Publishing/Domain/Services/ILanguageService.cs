@@ -8,6 +8,6 @@ public interface ILanguageService
     Task<IEnumerable<Language>> ListAsync();
     Task<IEnumerable<Language>> ListByLanguageIdAsync(int languageId);
     Task<LanguageResponse> SaveAsync(Language language);
-    Task<LanguageResponse> UpdateAsync(int languageId);
+    Task<LanguageResponse> UpdateAsync(int languageId, Language language);
     Task<LanguageResponse> DeleteAsync(int languageId);
 }
