@@ -10,7 +10,7 @@ using ReadOwoBackend.Shared.Extensions;
 namespace ReadOwoBackend.Publishing.Controllers;
 
 [ApiController]
-[Route("api/v1/[genres]")]
+[Route("api/v1/[controller]")]
 public class GenreController : ControllerBase
 {
     private readonly IGenreService _genreService;
