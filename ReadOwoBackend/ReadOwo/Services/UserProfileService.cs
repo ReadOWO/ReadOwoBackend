@@ -7,26 +7,26 @@ namespace ReadOwoBackend.ReadOwo.Services;
 
 public class UserProfileService : IUserProfileService
 {
-    private readonly IUserProfileRepository _UserProfileRepository;
+    private readonly IUserProfileRepository _userProfileRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
     
     public UserProfileService(IUserProfileRepository userProfileRepository, 
         IUnitOfWork unitOfWork, IUserRepository userRepository)
     {
-        _UserProfileRepository = userProfileRepository;
+        _userProfileRepository = userProfileRepository;
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
     }
 
     public async Task<IEnumerable<UserProfile>> ListAsync()
     {
-        return await _UserProfileRepository.ListAsync();
+        return await _userProfileRepository.ListAsync();
     }
 
     public async Task<IEnumerable<UserProfile>> ListByUserIdAsync(int userId)
     {
-        return await _UserProfileRepository.FindByUserIdAsync(userId);
+        return await _userProfileRepository.FindByUserIdAsync(userId);
 
     }
 
@@ -38,12 +38,12 @@ public class UserProfileService : IUserProfileService
             return new UserProfileResponse("Invalid User");
         
         var existingUserProfileWithName = await 
-            _UserProfileRepository.FindByNameAsync(userProfile.Name);
+            _userProfileRepository.FindByNameAsync(userProfile.Name);
         if (existingUserProfileWithName != null)
             return new UserProfileResponse("Profile name already exists.");
         try
         {
-            await _UserProfileRepository.AddAsync(userProfile);
+            await _userProfileRepository.AddAsync(userProfile);
  
             await _unitOfWork.CompleteAsync();
             
@@ -58,7 +58,7 @@ public class UserProfileService : IUserProfileService
     public async Task<UserProfileResponse> UpdateAsync(int userProfileId, UserProfile userProfile)
     {
         var existingUserProfile = await 
-            _UserProfileRepository.FindByIdAsync(userProfileId);
+            _userProfileRepository.FindByIdAsync(userProfileId);
         
         if (existingUserProfile == null)
             return new UserProfileResponse("Profile not found.");
@@ -68,7 +68,7 @@ public class UserProfileService : IUserProfileService
         if (existingUser == null)
             return new UserProfileResponse("Invalid User");
         var existingUserProfileWithName = await 
-            _UserProfileRepository.FindByNameAsync(userProfile.Name);
+            _userProfileRepository.FindByNameAsync(userProfile.Name);
         if (existingUserProfileWithName != null && 
             existingUserProfileWithName.Id != existingUserProfile.Id)
             return new UserProfileResponse("Profile name already exists.");
@@ -77,7 +77,7 @@ public class UserProfileService : IUserProfileService
         
         try
         {
-            _UserProfileRepository.Update(existingUserProfile);
+            _userProfileRepository.Update(existingUserProfile);
             await _unitOfWork.CompleteAsync();
             return new UserProfileResponse(existingUserProfile);
  }
@@ -90,14 +90,14 @@ public class UserProfileService : IUserProfileService
     public async Task<UserProfileResponse> DeleteAsync(int userProfileId)
     {
         var existingUserProfile = await 
-            _UserProfileRepository.FindByIdAsync(userProfileId);
+            _userProfileRepository.FindByIdAsync(userProfileId);
         
         if (existingUserProfile == null)
             return new UserProfileResponse("Profile not found.");
  
         try
         {
-            _UserProfileRepository.Remove(existingUserProfile);
+            _userProfileRepository.Remove(existingUserProfile);
             await _unitOfWork.CompleteAsync();
             return new UserProfileResponse(existingUserProfile);
         }
