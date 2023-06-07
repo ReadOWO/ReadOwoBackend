@@ -11,9 +11,14 @@ public class GenreService : IGenreService
     private readonly IGenreRepository _genreRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    
 
-public async Task<IEnumerable<Genre>> ListAsync()
+    public GenreService(IGenreRepository genreRepository, IUnitOfWork unitOfWork)
+    {
+        _genreRepository = genreRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<IEnumerable<Genre>> ListAsync()
     {
         return await _genreRepository.ListAsync();
     }
