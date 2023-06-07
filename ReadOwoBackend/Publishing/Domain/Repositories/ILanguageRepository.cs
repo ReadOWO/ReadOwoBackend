@@ -2,7 +2,7 @@
 
 namespace ReadOwoBackend.Publishing.Domain.Repositories;
 
-public interface ILanguageReposiroty
+public interface ILanguageRepository
 {
     Task<IEnumerable<Language>> ListAsync();
     Task AddAsync(Language language);
