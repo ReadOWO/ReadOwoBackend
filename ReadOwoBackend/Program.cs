@@ -31,6 +31,8 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Dependency Injection Configuration
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // AutoMapper COnfiguration
