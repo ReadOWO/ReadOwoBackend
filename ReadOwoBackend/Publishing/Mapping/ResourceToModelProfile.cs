@@ -10,5 +10,6 @@ public class ResourceToModelProfile : Profile
     public ResourceToModelProfile()
     {
         CreateMap<SaveGenreResource, Genre>();
+        CreateMap<SaveLanguageResource, Language>();
     }
 }
