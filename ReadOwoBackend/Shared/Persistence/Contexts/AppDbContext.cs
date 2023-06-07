@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReadOwoBackend.Publishing.Domain.Models;
 using ReadOwoBackend.Shared.Extensions;
 using ReadOwoBackend.ReadOwo.Domain.Models;
 
@@ -12,10 +13,13 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Language> Languages { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<User>().HasKey(p => p.Id);
         modelBuilder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -27,12 +31,25 @@ public class AppDbContext : DbContext
             .HasMany(p => p.Profiles)
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId);
-        
+
         modelBuilder.Entity<UserProfile>().ToTable("user_profile");
         modelBuilder.Entity<UserProfile>().HasKey(p => p.Id);
         modelBuilder.Entity<UserProfile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<UserProfile>().Property(p => p.Name).IsRequired().HasMaxLength(30);
 
+        modelBuilder.Entity<Genre>().ToTable("Genres");
+        modelBuilder.Entity<Genre>().HasKey(p => p.Id);
+        modelBuilder.Entity<Genre>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Genre>().Property(p => p.Name).IsRequired().HasMaxLength(24);
+
+        modelBuilder.Entity<Language>().ToTable("Languages");
+        modelBuilder.Entity<Language>().HasKey(p => p.Id);
+        modelBuilder.Entity<Language>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Language>().Property(p => p.Name).IsRequired().HasMaxLength(12);
+        modelBuilder.Entity<Language>().Property(p => p.Abbreviation).IsRequired().HasMaxLength(4);
+        
+        
+        
         modelBuilder.UseSnakeCaseNamingConvention();
     }
 }
