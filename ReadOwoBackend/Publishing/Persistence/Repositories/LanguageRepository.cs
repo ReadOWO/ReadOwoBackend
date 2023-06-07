@@ -6,7 +6,7 @@ using ReadOwoBackend.Shared.Persistence.Repositories;
 
 namespace ReadOwoBackend.Publishing.Persistence.Repositories;
 
-public class LanguageRepository : BaseRepository, ILanguageReposiroty
+public class LanguageRepository : BaseRepository, ILanguageRepository
 {
     public LanguageRepository(AppDbContext context) : base(context)
     {
