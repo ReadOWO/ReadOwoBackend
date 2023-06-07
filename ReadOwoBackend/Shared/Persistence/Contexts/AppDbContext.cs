@@ -35,6 +35,11 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<UserProfile>().HasKey(p => p.Id);
         modelBuilder.Entity<UserProfile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<UserProfile>().Property(p => p.Name).IsRequired().HasMaxLength(30);
+        
+        modelBuilder.Entity<Genre>().ToTable("Genres");
+        modelBuilder.Entity<Genre>().HasKey(p=>p.Id);
+        modelBuilder.Entity<Genre>().Property(p=>p.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Genre>().Property(p=>p.Name).IsRequired().HasMaxLength(24);
 
         modelBuilder.UseSnakeCaseNamingConvention();
     }
