@@ -6,7 +6,6 @@ namespace ReadOwoBackend.ReadOwo.Domain.Services;
 public interface IUserService
 {
     Task<IEnumerable<User>> ListAsync();
-    Task<IEnumerable<User>> ListByUserIdAsync(int userId);
     Task<UserResponse> SaveAsync(User user);
     Task<UserResponse> UpdateAsync(int userId, User user);
     Task<UserResponse> DeleteAsync(int userId);
