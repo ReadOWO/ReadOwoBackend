@@ -9,5 +9,6 @@ public class ResourceToModelProfile : Profile
     public ResourceToModelProfile()
     {
         CreateMap<SaveUserResource, User>();
+        CreateMap<SaveUserProfileResource, UserProfile>();
     }
 }
