@@ -7,7 +7,8 @@ namespace ReadOwoBackend.Shared.Persistence.Contexts;
 public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<UserProfile> Profiles { get; set; } 
+    
+    public DbSet<UserProfile> User_profile { get; set; } 
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }
@@ -27,7 +28,7 @@ public class AppDbContext : DbContext
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId);
         
-        modelBuilder.Entity<UserProfile>().ToTable("Profiles");
+        modelBuilder.Entity<UserProfile>().ToTable("user_profile");
         modelBuilder.Entity<UserProfile>().HasKey(p => p.Id);
         modelBuilder.Entity<UserProfile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<UserProfile>().Property(p => p.Name).IsRequired().HasMaxLength(30);
