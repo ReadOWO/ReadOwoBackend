@@ -11,5 +11,7 @@ public class ResourceToModelProfile : Profile
     {
         CreateMap<SaveGenreResource, Genre>();
         CreateMap<SaveLanguageResource, Language>();
+        CreateMap<SaveSagaResource, Saga>();
+        CreateMap<SaveSagaStatusResource, SagaStatus>();
     }
 }

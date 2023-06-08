@@ -10,5 +10,7 @@ public class ModelToResourceProfile : Profile
     {
         CreateMap<Genre, GenreResource>();
         CreateMap<Language, LanguageResource>();
+        CreateMap<Saga, SagaResource>();
+        CreateMap<SagaStatus, SagaStatusResource>();
     }
 }

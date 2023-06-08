@@ -15,6 +15,10 @@ public class AppDbContext : DbContext
     }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<Language> Languages { get; set; }
+    
+    public DbSet<Saga> Sagas { get; set; }
+    
+    public DbSet<SagaStatus> SagaStatuses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -47,8 +51,24 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Language>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Language>().Property(p => p.Name).IsRequired().HasMaxLength(12);
         modelBuilder.Entity<Language>().Property(p => p.Abbreviation).IsRequired().HasMaxLength(4);
+
+        //Sagas
+        modelBuilder.Entity<Saga>().ToTable("Sagas"); 
+        modelBuilder.Entity<Saga>().HasKey(s => s.Id);
+        modelBuilder.Entity<Saga>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Saga>().Property(s => s.Title).IsRequired().HasMaxLength(100);
+        modelBuilder.Entity<Saga>().Property(s => s.Synopsis).IsRequired().HasMaxLength(500);
+
         
-        
+        //Saga Statuses
+        modelBuilder.Entity<SagaStatus>().ToTable("SagaStatuses");
+        modelBuilder.Entity<SagaStatus>().HasKey(ss => ss.Id);
+        modelBuilder.Entity<SagaStatus>().Property(ss => ss.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<SagaStatus>().Property(ss => ss.Name).IsRequired().HasMaxLength(100);
+        modelBuilder.Entity<SagaStatus>()
+            .HasMany(ss=>ss.Sagas)
+            .WithOne(s => s.SagaStatus)
+            .HasForeignKey(s => s.SagaStatusId);
         
         modelBuilder.UseSnakeCaseNamingConvention();
     }
