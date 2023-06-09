@@ -19,6 +19,10 @@ public class AppDbContext : DbContext
     public DbSet<Saga> Sagas { get; set; }
     
     public DbSet<SagaStatus> SagaStatuses { get; set; }
+    
+    public DbSet<Book> Books { get; set; }
+    
+    public DbSet<BookStatus> BookStatuses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,7 +34,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().Property(p => p.Name).IsRequired().HasMaxLength(30);
         modelBuilder.Entity<User>().Property(p => p.email).IsRequired().HasMaxLength(240);
         modelBuilder.Entity<User>().Property(p => p.password).IsRequired().HasMaxLength(240);
-
         modelBuilder.Entity<User>()
             .HasMany(p => p.Profiles)
             .WithOne(p => p.User)
@@ -51,13 +54,20 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Language>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Language>().Property(p => p.Name).IsRequired().HasMaxLength(12);
         modelBuilder.Entity<Language>().Property(p => p.Abbreviation).IsRequired().HasMaxLength(4);
-
+        modelBuilder.Entity<Language>()
+            .HasMany(s=>s.Books)
+            .WithOne(b => b.Language)
+            .HasForeignKey(b => b.LanguageId);
         //Sagas
         modelBuilder.Entity<Saga>().ToTable("Sagas"); 
         modelBuilder.Entity<Saga>().HasKey(s => s.Id);
         modelBuilder.Entity<Saga>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Saga>().Property(s => s.Title).IsRequired().HasMaxLength(100);
         modelBuilder.Entity<Saga>().Property(s => s.Synopsis).IsRequired().HasMaxLength(500);
+        modelBuilder.Entity<Saga>()
+            .HasMany(s=>s.Books)
+            .WithOne(b => b.Saga)
+            .HasForeignKey(b => b.SagaId);
 
         
         //Saga Statuses
@@ -69,6 +79,26 @@ public class AppDbContext : DbContext
             .HasMany(ss=>ss.Sagas)
             .WithOne(s => s.SagaStatus)
             .HasForeignKey(s => s.SagaStatusId);
+        
+        //Books
+        modelBuilder.Entity<Book>().ToTable("Books"); 
+        modelBuilder.Entity<Book>().HasKey(s => s.Id);
+        modelBuilder.Entity<Book>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Book>().Property(s => s.Title).IsRequired().HasMaxLength(100);
+        modelBuilder.Entity<Book>().Property(s => s.Synopsis).IsRequired().HasMaxLength(500);
+        modelBuilder.Entity<Book>().Property(s => s.PublishedAt).IsRequired();
+        modelBuilder.Entity<Book>().Property(s => s.ThumbnailUrl).IsRequired();
+        modelBuilder.Entity<Book>().Property(s => s.ProfileId).IsRequired();
+        
+        //Book Statuses
+        modelBuilder.Entity<BookStatus>().ToTable("BookStatuses");
+        modelBuilder.Entity<BookStatus>().HasKey(ss => ss.Id);
+        modelBuilder.Entity<BookStatus>().Property(ss => ss.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<BookStatus>().Property(ss => ss.Name).IsRequired().HasMaxLength(100);
+        modelBuilder.Entity<BookStatus>()
+            .HasMany(ss=>ss.Books)
+            .WithOne(s => s.BookStatus)
+            .HasForeignKey(s => s.BookStatusId);
         
         modelBuilder.UseSnakeCaseNamingConvention();
     }

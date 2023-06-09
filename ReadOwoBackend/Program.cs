@@ -37,15 +37,24 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+//Saga and Saga Status
 builder.Services.AddScoped<ISagaStatusRepository, SagaStatusRepository>();
 builder.Services.AddScoped<ISagaStatusService, SagaStatusService>();
 builder.Services.AddScoped<ISagaRepository, SagaRepository>();
 builder.Services.AddScoped<ISagaService, SagaService>();
+//Language
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
+//Genre
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//Book and Book status
+builder.Services.AddScoped<IBookStatusRepository, BookStatusRepository>();
+builder.Services.AddScoped<IBookStatusService, BookStatusService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 // AutoMapper COnfiguration
 builder.Services.AddAutoMapper(
