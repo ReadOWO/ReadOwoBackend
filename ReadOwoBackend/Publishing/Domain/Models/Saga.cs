@@ -10,4 +10,6 @@ public class Saga
     
     public int SagaStatusId { get; set; }
     public SagaStatus SagaStatus { get; set; }
+    
+    public IList<Book> Books { get; set; } = new List<Book>();
 }

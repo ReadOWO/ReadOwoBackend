@@ -34,7 +34,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().Property(p => p.Name).IsRequired().HasMaxLength(30);
         modelBuilder.Entity<User>().Property(p => p.email).IsRequired().HasMaxLength(240);
         modelBuilder.Entity<User>().Property(p => p.password).IsRequired().HasMaxLength(240);
-
         modelBuilder.Entity<User>()
             .HasMany(p => p.Profiles)
             .WithOne(p => p.User)
@@ -55,13 +54,20 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Language>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Language>().Property(p => p.Name).IsRequired().HasMaxLength(12);
         modelBuilder.Entity<Language>().Property(p => p.Abbreviation).IsRequired().HasMaxLength(4);
-
+        modelBuilder.Entity<Language>()
+            .HasMany(s=>s.Books)
+            .WithOne(b => b.Language)
+            .HasForeignKey(b => b.LanguageId);
         //Sagas
         modelBuilder.Entity<Saga>().ToTable("Sagas"); 
         modelBuilder.Entity<Saga>().HasKey(s => s.Id);
         modelBuilder.Entity<Saga>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Saga>().Property(s => s.Title).IsRequired().HasMaxLength(100);
         modelBuilder.Entity<Saga>().Property(s => s.Synopsis).IsRequired().HasMaxLength(500);
+        modelBuilder.Entity<Saga>()
+            .HasMany(s=>s.Books)
+            .WithOne(b => b.Saga)
+            .HasForeignKey(b => b.SagaId);
 
         
         //Saga Statuses
@@ -81,6 +87,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Book>().Property(s => s.Title).IsRequired().HasMaxLength(100);
         modelBuilder.Entity<Book>().Property(s => s.Synopsis).IsRequired().HasMaxLength(500);
         modelBuilder.Entity<Book>().Property(s => s.PublishedAt).IsRequired();
+        modelBuilder.Entity<Book>().Property(s => s.ThumbnailUrl).IsRequired();
+        modelBuilder.Entity<Book>().Property(s => s.ProfileId).IsRequired();
         
         //Book Statuses
         modelBuilder.Entity<BookStatus>().ToTable("BookStatuses");

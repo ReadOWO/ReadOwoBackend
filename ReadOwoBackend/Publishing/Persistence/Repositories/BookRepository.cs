@@ -14,7 +14,10 @@ public class BookRepository : BaseRepository, IBookRepository
     public async Task<IEnumerable<Book>> ListAsync()
     {
         return await _context.Books
-            .Include(ss => ss.BookStatus)
+            .Include(bs => bs.BookStatus)
+            .Include(s=>s.Saga)
+            .Include(ss=>ss.Saga.SagaStatus)
+            .Include(l=>l.Language)
             .ToListAsync();
     }
     public async Task AddAsync(Book book)
@@ -24,7 +27,10 @@ public class BookRepository : BaseRepository, IBookRepository
     public async Task<Book> FindByIdAsync(int bookId)
     {
         return await _context.Books
-            .Include(ss=>ss.BookStatus )
+            .Include(bs => bs.BookStatus)
+            .Include(s=>s.Saga)
+            .Include(ss=>ss.Saga.SagaStatus)
+            .Include(l=>l.Language)
             .FirstOrDefaultAsync(s=>s.Id == bookId);
     }
     public void Update(Book book)

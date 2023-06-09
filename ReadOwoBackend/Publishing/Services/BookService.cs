@@ -11,13 +11,16 @@ public class BookService : IBookService
     private readonly IBookRepository _bookRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IBookStatusRepository _bookStatusRepository;
+    private readonly ISagaRepository _sagaRepository;
+    private readonly ILanguageRepository _languageRepository;
 
-    public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork,
-        IBookStatusRepository bookStatusRepository)
+    public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork, IBookStatusRepository bookStatusRepository, ISagaRepository sagaRepository, ILanguageRepository languageRepository)
     {
         _bookRepository = bookRepository;
         _unitOfWork = unitOfWork;
         _bookStatusRepository = bookStatusRepository;
+        _sagaRepository = sagaRepository;
+        _languageRepository = languageRepository;
     }
 
     public async Task<IEnumerable<Book>> ListAsync()
@@ -42,6 +45,18 @@ public class BookService : IBookService
 
         if (existingBookStatus == null)
             return new BookResponse("Invalid Book Status");
+        
+        //Validate Saga
+        var existingSaga = await _sagaRepository.FindByIdAsync(book.SagaId);
+        
+        if (existingSaga == null)
+            return new BookResponse("Invalid Saga");
+        
+        //Validate Language
+        var existingLanguage = await _languageRepository.FindByIdAsync(book.LanguageId);
+        
+        if (existingLanguage == null) 
+            return new BookResponse("Invalid Language");
 
         try
         {
@@ -75,10 +90,23 @@ public class BookService : IBookService
         if (existingBookStatus == null)
             return new BookResponse("Invalid book status.");
         
+        //Validate SagaId
+        var existingSaga = await _sagaRepository.FindByIdAsync(book.SagaId);
+        
+        if (existingSaga == null)
+            return new BookResponse("Invalid Saga");
+        
+        //Validate Language
+        var existingLanguage = await _languageRepository.FindByIdAsync(book.LanguageId);
+        
+        if (existingLanguage == null) 
+            return new BookResponse("Invalid Language");
+        
         //Update
         existingBook.Title = book.Title;
         existingBook.Synopsis = book.Synopsis;
         existingBook.PublishedAt = book.PublishedAt;
+        existingBook.ThumbnailUrl = book.ThumbnailUrl;
 
         try
         {
