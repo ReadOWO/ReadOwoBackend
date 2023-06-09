@@ -106,6 +106,8 @@ public class BookService : IBookService
         {
             _bookRepository.Remove(existingBook);
             await _unitOfWork.CompleteAsync();
+
+            return new BookResponse(existingBook);
         }
         catch (Exception e)
         {
