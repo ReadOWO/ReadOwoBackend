@@ -9,7 +9,7 @@ public class BookResponse : BaseResponse<Book>
     {
     }
     
-    public BookResponse(string resource): base(resource)
+    public BookResponse(Book resource): base(resource)
     {
     }
 }
