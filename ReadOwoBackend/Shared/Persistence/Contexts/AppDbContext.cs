@@ -21,6 +21,8 @@ public class AppDbContext : DbContext
     public DbSet<SagaStatus> SagaStatuses { get; set; }
     
     public DbSet<Book> Books { get; set; }
+    
+    public DbSet<BookStatus> BookStatuses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,6 +81,16 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Book>().Property(s => s.Title).IsRequired().HasMaxLength(100);
         modelBuilder.Entity<Book>().Property(s => s.Synopsis).IsRequired().HasMaxLength(500);
         modelBuilder.Entity<Book>().Property(s => s.PublishedAt).IsRequired();
+        
+        //Book Statuses
+        modelBuilder.Entity<BookStatus>().ToTable("BookStatuses");
+        modelBuilder.Entity<BookStatus>().HasKey(ss => ss.Id);
+        modelBuilder.Entity<BookStatus>().Property(ss => ss.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<BookStatus>().Property(ss => ss.Name).IsRequired().HasMaxLength(100);
+        modelBuilder.Entity<BookStatus>()
+            .HasMany(ss=>ss.Books)
+            .WithOne(s => s.BookStatus)
+            .HasForeignKey(s => s.BookStatusId);
         
         modelBuilder.UseSnakeCaseNamingConvention();
     }
