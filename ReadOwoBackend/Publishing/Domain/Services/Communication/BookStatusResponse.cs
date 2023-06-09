@@ -7,5 +7,5 @@ public class BookStatusResponse : BaseResponse<BookStatus>
 {
     public BookStatusResponse(string message): base(message){}
     
-    public BookStatusResponse(string resource): base(resource){}
+    public BookStatusResponse(BookStatus resource): base(resource){}
 }
