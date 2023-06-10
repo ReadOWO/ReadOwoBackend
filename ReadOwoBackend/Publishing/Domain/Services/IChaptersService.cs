@@ -1,12 +1,13 @@
 using ReadOwoBackend.Publishing.Domain.Models;
+using ReadOwoBackend.Publishing.Domain.Services.Communication;
 
 namespace ReadOwoBackend.Publishing.Domain.Services;
 
 public interface IChaptersService
 {
     Task<IEnumerable<Chapters>> ListAsync();
-    Task AddAsync(Chapters chapters);
-    Task<Chapters> FindByIdAsync(int id);
-    void Update(Chapters  chapters);
-    void Remove(Chapters  chapters);
+    Task<IEnumerable<Chapters>> ListByChaptersIdAsync(int chaptersId);
+    Task<ChaptersResponse> SaveAsync(Chapters chapters);
+    Task<ChaptersResponse> UpdateAsync(int chaptersId, Chapters chapters);
+    Task<ChaptersResponse> DeleteAsync(int chaptersId);
 }

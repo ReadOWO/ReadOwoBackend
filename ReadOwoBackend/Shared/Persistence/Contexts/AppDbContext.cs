@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReadOwoBackend.Publishing.Domain.Models;
+using ReadOwoBackend.Publishing.Resources;
 using ReadOwoBackend.Shared.Extensions;
 using ReadOwoBackend.ReadOwo.Domain.Models;
 
@@ -23,6 +24,7 @@ public class AppDbContext : DbContext
     public DbSet<Book> Books { get; set; }
     
     public DbSet<BookStatus> BookStatuses { get; set; }
+    public DbSet<Chapters> Chapters { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,6 +50,14 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Genre>().HasKey(p => p.Id);
         modelBuilder.Entity<Genre>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Genre>().Property(p => p.Name).IsRequired().HasMaxLength(24);
+        //Chapters
+        modelBuilder.Entity<Chapters>().ToTable("Chapters");
+        modelBuilder.Entity<Chapters>().HasKey(s => s.Id);
+        modelBuilder.Entity<Chapters>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<Chapters>().Property(s => s.Title).IsRequired().HasMaxLength(24);
+        modelBuilder.Entity<Chapters>().Property(s => s.Document_content_url).IsRequired().HasMaxLength(50);
+       
+            
 
         modelBuilder.Entity<Language>().ToTable("Languages");
         modelBuilder.Entity<Language>().HasKey(p => p.Id);
@@ -89,6 +99,11 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Book>().Property(s => s.PublishedAt).IsRequired();
         modelBuilder.Entity<Book>().Property(s => s.ThumbnailUrl).IsRequired();
         modelBuilder.Entity<Book>().Property(s => s.ProfileId).IsRequired();
+        modelBuilder.Entity<Book>()
+            .HasMany(s => s.Chapters)
+            .WithOne(s => s.Book)
+            .HasForeignKey(s => s.BookId);
+        
         
         //Book Statuses
         modelBuilder.Entity<BookStatus>().ToTable("BookStatuses");
