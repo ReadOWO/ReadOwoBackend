@@ -56,6 +56,9 @@ builder.Services.AddScoped<IBookStatusService, BookStatusService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 
+builder.Services.AddScoped<IChaptersRepository, ChaptersRepository>();
+builder.Services.AddScoped<IChaptersService, ChaptersService>();
+
 //bookGenre
 builder.Services.AddScoped<IBookGenreRepository, BookGenreRepository>();
 builder.Services.AddScoped<IBookGenreService, BookGenreService>();
