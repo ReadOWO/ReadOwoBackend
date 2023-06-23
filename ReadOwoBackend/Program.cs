@@ -56,6 +56,10 @@ builder.Services.AddScoped<IBookStatusService, BookStatusService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 
+//bookGenre
+builder.Services.AddScoped<IBookGenreRepository, BookGenreRepository>();
+builder.Services.AddScoped<IBookGenreService, BookGenreService>();
+
 // AutoMapper COnfiguration
 builder.Services.AddAutoMapper(
     typeof(ModelToResourceProfile),
