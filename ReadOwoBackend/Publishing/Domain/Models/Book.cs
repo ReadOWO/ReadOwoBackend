@@ -17,4 +17,5 @@ public class Book
     public Language Language { get; set; }
     
     public IList<Chapters> Chapters { get; set; } = new List<Chapters>();
+    public IList<BookGenre> BookGenres { get; set; } = new List<BookGenre>();
 }
