@@ -15,5 +15,6 @@ public class ModelToResourceProfile : Profile
         CreateMap<SagaStatus, SagaStatusResource>();
         CreateMap<Book, BookResource>();
         CreateMap<BookStatus, BookStatusResource>();
+        CreateMap<BookGenre, BookGenreResource>();
     }
 }
