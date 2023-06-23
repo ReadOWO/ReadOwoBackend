@@ -25,11 +25,13 @@ public class AppDbContext : DbContext
     
     public DbSet<BookStatus> BookStatuses { get; set; }
     public DbSet<Chapters> Chapters { get; set; }
+    public DbSet<BookGenre> BookGenres { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        //Users
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<User>().HasKey(p => p.Id);
         modelBuilder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -41,15 +43,22 @@ public class AppDbContext : DbContext
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId);
 
+        //User Profile
         modelBuilder.Entity<UserProfile>().ToTable("user_profile");
         modelBuilder.Entity<UserProfile>().HasKey(p => p.Id);
         modelBuilder.Entity<UserProfile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<UserProfile>().Property(p => p.Name).IsRequired().HasMaxLength(30);
 
+        //Genres
         modelBuilder.Entity<Genre>().ToTable("Genres");
         modelBuilder.Entity<Genre>().HasKey(p => p.Id);
         modelBuilder.Entity<Genre>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         modelBuilder.Entity<Genre>().Property(p => p.Name).IsRequired().HasMaxLength(24);
+        modelBuilder.Entity<Genre>()
+            .HasMany(s => s.BookGenres)
+            .WithOne(b => b.Genre)
+            .HasForeignKey(p => p.GenreId);
+        
         //Chapters
         modelBuilder.Entity<Chapters>().ToTable("Chapters");
         modelBuilder.Entity<Chapters>().HasKey(s => s.Id);
@@ -57,8 +66,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Chapters>().Property(s => s.Title).IsRequired().HasMaxLength(24);
         modelBuilder.Entity<Chapters>().Property(s => s.Document_content_url).IsRequired().HasMaxLength(50);
        
-            
-
+        //Languages
         modelBuilder.Entity<Language>().ToTable("Languages");
         modelBuilder.Entity<Language>().HasKey(p => p.Id);
         modelBuilder.Entity<Language>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
@@ -68,6 +76,7 @@ public class AppDbContext : DbContext
             .HasMany(s=>s.Books)
             .WithOne(b => b.Language)
             .HasForeignKey(b => b.LanguageId);
+        
         //Sagas
         modelBuilder.Entity<Saga>().ToTable("Sagas"); 
         modelBuilder.Entity<Saga>().HasKey(s => s.Id);
@@ -103,6 +112,10 @@ public class AppDbContext : DbContext
             .HasMany(s => s.Chapters)
             .WithOne(s => s.Book)
             .HasForeignKey(s => s.BookId);
+        modelBuilder.Entity<Book>()
+            .HasMany(s => s.BookGenres)
+            .WithOne(s => s.Book)
+            .HasForeignKey(s => s.BookId);
         
         
         //Book Statuses
@@ -114,6 +127,20 @@ public class AppDbContext : DbContext
             .HasMany(ss=>ss.Books)
             .WithOne(s => s.BookStatus)
             .HasForeignKey(s => s.BookStatusId);
+        
+        
+        //Book-Genres
+        modelBuilder.Entity<BookGenre>().ToTable("BookGenres");
+        modelBuilder.Entity<BookGenre>().HasKey(s => s.Id);
+        modelBuilder.Entity<BookGenre>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
+        modelBuilder.Entity<BookGenre>()
+            .HasOne(s => s.Book)
+            .WithMany(s => s.BookGenres)
+            .HasForeignKey(s => s.BookId);
+        modelBuilder.Entity<BookGenre>()
+            .HasOne(s => s.Genre)
+            .WithMany(s => s.BookGenres)
+            .HasForeignKey(s => s.GenreId);
         
         modelBuilder.UseSnakeCaseNamingConvention();
     }
