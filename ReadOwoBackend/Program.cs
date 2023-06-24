@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ReadOwoBackend.Publishing.Domain.Models;
 using ReadOwoBackend.Publishing.Domain.Repositories;
 using ReadOwoBackend.Publishing.Domain.Services;
 using ReadOwoBackend.Publishing.Persistence.Repositories;
@@ -84,7 +85,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
