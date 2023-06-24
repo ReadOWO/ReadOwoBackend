@@ -27,6 +27,14 @@ public class ChaptersController : ControllerBase
         var resources = _mapper.Map<IEnumerable<Chapters>, IEnumerable<ChaptersResource>>(chapters);
         return resources;
     }
+    
+    [HttpGet("{id}")]
+    public async Task<ChaptersResource> FindByIdAsync(int chapterId)
+    {
+        var chaptersResponse = await _chaptersService.FindByIdAsync(chapterId);
+        var resource = _mapper.Map<Chapters,ChaptersResource>(chaptersResponse.Resource);
+        return resource;
+    }
 
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] SaveChaptersResource resource)
