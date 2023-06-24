@@ -23,10 +23,16 @@ public class ChaptersService : IChaptersService
         return await _chaptersRepository.ListAsync();
     }
 
-    public async Task<IEnumerable<Chapters>> ListByChaptersIdAsync(int chaptersId)
+    public async Task<ChaptersResponse> FindByIdAsync(int chaptersId)
     {
-        return await _chaptersRepository.ListAsync();
+        var chapters = await _chaptersRepository.FindByIdAsync(chaptersId);
+        
+        if (chapters == null)
+            return new ChaptersResponse("Chapter not found");
+        
+        return new ChaptersResponse(chapters);
     }
+    
 
     public async Task<ChaptersResponse> SaveAsync(Chapters chapters)
     {
@@ -48,6 +54,7 @@ public class ChaptersService : IChaptersService
         if (existingChapters == null)
             return new ChaptersResponse("Genre not found.");
         existingChapters.Title = chapters.Title;
+        existingChapters.Document_content_url = chapters.Document_content_url;
         try
         {
             _chaptersRepository.Update(existingChapters);
