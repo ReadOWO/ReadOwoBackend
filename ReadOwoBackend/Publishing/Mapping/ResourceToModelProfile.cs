@@ -16,5 +16,6 @@ public class ResourceToModelProfile : Profile
         CreateMap<SaveBookResource, Book>();
         CreateMap<SaveBookStatusResource, BookStatus>();
         CreateMap<SaveChaptersResource, Chapters>();
+        CreateMap<SaveBookGenreResource, BookGenre>();
     }
 }
