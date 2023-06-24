@@ -63,9 +63,12 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Chapters>().ToTable("Chapters");
         modelBuilder.Entity<Chapters>().HasKey(s => s.Id);
         modelBuilder.Entity<Chapters>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
-        modelBuilder.Entity<Chapters>().Property(s => s.Title).IsRequired().HasMaxLength(24);
-        modelBuilder.Entity<Chapters>().Property(s => s.Document_content_url).IsRequired().HasMaxLength(50);
-       
+        modelBuilder.Entity<Chapters>().Property(s => s.Title).IsRequired().HasMaxLength(100);
+        modelBuilder.Entity<Chapters>().Property(s => s.Document_content_url).IsRequired();
+        modelBuilder.Entity<Chapters>()
+            .HasOne(s => s.Book)
+            .WithMany(s => s.Chapters)
+            .HasForeignKey(s => s.BookId);
         //Languages
         modelBuilder.Entity<Language>().ToTable("Languages");
         modelBuilder.Entity<Language>().HasKey(p => p.Id);

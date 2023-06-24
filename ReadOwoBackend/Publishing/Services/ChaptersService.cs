@@ -10,12 +10,13 @@ public class ChaptersService : IChaptersService
 {
       private readonly IChaptersRepository _chaptersRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IBookRepository _bookRepository;
 
-
-    public ChaptersService(IChaptersRepository chaptersRepository, IUnitOfWork unitOfWork)
+    public ChaptersService(IChaptersRepository chaptersRepository, IUnitOfWork unitOfWork,IBookRepository bookRepository)
     {
         _chaptersRepository = chaptersRepository;
         _unitOfWork = unitOfWork;
+        _bookRepository = bookRepository;
     }
 
     public async Task<IEnumerable<Chapters>> ListAsync()
@@ -36,15 +37,26 @@ public class ChaptersService : IChaptersService
 
     public async Task<ChaptersResponse> SaveAsync(Chapters chapters)
     {
+        //validate Book
+        var existingBook = await _bookRepository.FindByIdAsync(chapters.BookId);
+
+        if (existingBook == null)
+            return new ChaptersResponse("Invalid Book");
+        
         try
         {
+            //Add
             await _chaptersRepository.AddAsync(chapters);
+
+            //Complete transaction
             await _unitOfWork.CompleteAsync();
+
+            //Return response
             return new ChaptersResponse(chapters);
         }
         catch (Exception e)
         {
-            return new ChaptersResponse($"An error occurred while saving the chapters: {e.Message}");
+            return new ChaptersResponse($"An error ocurred while saving the chapters element: {e.Message}");
         }
     }
 
