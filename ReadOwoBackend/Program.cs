@@ -69,6 +69,17 @@ builder.Services.AddAutoMapper(
     typeof(ModelToResourceProfile),
     typeof(ResourceToModelProfile));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policyBuilder  =>
+        {
+            policyBuilder .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Validation for ensuring Database Objects are created
