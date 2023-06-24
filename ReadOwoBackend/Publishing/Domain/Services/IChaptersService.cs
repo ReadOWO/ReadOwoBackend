@@ -6,7 +6,7 @@ namespace ReadOwoBackend.Publishing.Domain.Services;
 public interface IChaptersService
 {
     Task<IEnumerable<Chapters>> ListAsync();
-    Task<IEnumerable<Chapters>> ListByChaptersIdAsync(int chaptersId);
+    Task<ChaptersResponse> FindByIdAsync(int chaptersId);
     Task<ChaptersResponse> SaveAsync(Chapters chapters);
     Task<ChaptersResponse> UpdateAsync(int chaptersId, Chapters chapters);
     Task<ChaptersResponse> DeleteAsync(int chaptersId);

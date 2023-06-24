@@ -14,7 +14,13 @@ public class ChaptersRepository : BaseRepository, IChaptersRepository
 
     public async Task<IEnumerable<Chapters>> ListAsync()
     {
-        return await _context.Chapters.ToListAsync();
+        return await _context.Chapters
+            .Include(b=>b.Book)
+            .Include(b => b.Book.BookStatus)
+            .Include(b => b.Book.Saga)
+            .Include(b => b.Book.Saga.SagaStatus)
+            .Include(b => b.Book.Language)
+            .ToListAsync();
     }
 
     public async Task AddAsync(Chapters chapters)
@@ -24,7 +30,13 @@ public class ChaptersRepository : BaseRepository, IChaptersRepository
 
     public async Task<Chapters> FindByIdAsync(int id)
     {
-        return await _context.Chapters.FindAsync(id);
+        return await _context.Chapters
+            .Include(b=>b.Book)
+            .Include(b => b.Book.BookStatus)
+            .Include(b => b.Book.Saga)
+            .Include(b => b.Book.Saga.SagaStatus)
+            .Include(b => b.Book.Language)
+            .FirstOrDefaultAsync(c=>c.Id == id);
     }
 
     public void Update(Chapters chapters)
